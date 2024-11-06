@@ -44,7 +44,7 @@ This repository contains R scripts for the analysis conducted in this project. T
    - Performs questionnaire analyses as described in the section 3.4 of the article.
    - Generates the table and summary paragraph.
 
-6. **Supplementary analyses (`Scripts/supplementary_material.R`)**
+7. **Supplementary analyses (`Scripts/supplementary_material.R`)**
    - Performs supplementary analyses as described in the Supplementary Material.
    - Examines the sensitivity of the composite score per scenario.
    - Generates the associated plot.
