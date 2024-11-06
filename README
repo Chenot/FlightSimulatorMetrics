@@ -33,12 +33,21 @@ This repository contains R scripts for the analysis conducted in this project. T
 5. **Hypothesis 2: Subjective vs. Objective Workload (`Scripts/hypothesis2_subjective_objective_workload.R`)**
    - Tests Hypothesis 2 from Section 2.6.2.
    - Explores the relationship between subjective (NASA-TLX) and objective (Oddball) workload measures.
-   - Generates plots and summary paragraphs.
+   - Generates plot and summary paragraph.
 
 6. **Hypothesis 3: Composite Score & Workload (`Scripts/hypothesis3_composite_score_workload.R`)**
    - Tests Hypothesis 3 from Section 2.6.3.
    - Examines the relationship between composite performance scores and workload measures.
    - Generates plots and summary paragraphs.
+
+6. **Questionnaire analysis (`questionnaire_analysis.R`)**
+   - Performs questionnaire analyses as described in the section 3.4 of the article.
+   - Generates the table and summary paragraph.
+
+6. **Supplementary analyses (`Scripts/supplementary_material.R`)**
+   - Performs supplementary analyses as described in the Supplementary Material.
+   - Examines the sensitivity of the composite score per scenario.
+   - Generates the associated plot.
 
 ## **Instructions for Running the Scripts**
 
