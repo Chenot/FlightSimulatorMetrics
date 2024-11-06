@@ -40,11 +40,11 @@ This repository contains R scripts for the analysis conducted in this project. T
    - Examines the relationship between composite performance scores and workload measures.
    - Generates plots and summary paragraphs.
 
-6. **Questionnaire analysis (`questionnaire_analysis.R`)**
+7. **Questionnaire analysis (`questionnaire_analysis.R`)**
    - Performs questionnaire analyses as described in the section 3.4 of the article.
    - Generates the table and summary paragraph.
 
-7. **Supplementary analyses (`Scripts/supplementary_material.R`)**
+8. **Supplementary analyses (`Scripts/supplementary_material.R`)**
    - Performs supplementary analyses as described in the Supplementary Material.
    - Examines the sensitivity of the composite score per scenario.
    - Generates the associated plot.
@@ -53,7 +53,7 @@ This repository contains R scripts for the analysis conducted in this project. T
 
 1. **Run the Scripts**
    - Navigate to the `Scripts/` directory.
-   - Run the scripts in order if performing all analyses (statistical, graphs, text), or run individual scripts as needed.
+   - Run the analyses scripts to perform statistical analyses, generate graphs and associated paragraphs.
 
 ## **Dependencies**
 
