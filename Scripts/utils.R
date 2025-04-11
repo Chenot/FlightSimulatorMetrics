@@ -15,9 +15,10 @@ install_and_load_packages <- function(packages) {
 
 # List of required packages
 required_packages <- c(
-  "dplyr", "tidyverse", "lmerTest", "lme4", "broom", "ggplot2", "ggpubr", 
+  "rstudioapi", "dplyr", "tidyverse", "lmerTest", "lme4", "broom", "ggplot2", "ggpubr", 
   "gghalves", "PupillometryR", "performance", "gridExtra", "e1071", "moments",
-  "rstudioapi", "nortest", "xtable", "reshape2", "tidyr", "kableExtra"
+  "rstudioapi", "nortest", "xtable", "reshape2", "tidyr", "kableExtra", "effectsize", "MuMIn",
+  "performance", "datawizard", "parameters"
 )
 
 # Install and load packages

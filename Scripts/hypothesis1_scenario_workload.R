@@ -5,7 +5,6 @@
 ################################################
 ######### 1) Prepare data for analyses #########
 ################################################
-
 library(rstudioapi)
 
 # Load data and libraries
@@ -63,17 +62,34 @@ fixed_effects_subjective <- as.data.frame(model_summary_subjective$coefficients)
 # Get confidence intervals for fixed effects
 conf_int_subjective <- confint(mixed_model_subjective, parm = "beta_", level = 0.95)
 
-# Prepare results table (optional for reporting)
+# Calculate effect sizes using separate models for each effect
+model_full <- mixed_model_subjective
+model_no_difficulty <- lmer(TLX_raw ~ flight_rule + (1 | Participant), data = df_simu_perf)
+model_no_flight_rule <- lmer(TLX_raw ~ difficulty + (1 | Participant), data = df_simu_perf)
+model_no_interaction <- lmer(TLX_raw ~ difficulty + flight_rule + (1 | Participant), data = df_simu_perf)
+
+# Get R² values for each model
+r2_full <- r.squaredGLMM(model_full)[1]        # Full model
+r2_no_difficulty <- r.squaredGLMM(model_no_difficulty)[1]
+r2_no_flight_rule <- r.squaredGLMM(model_no_flight_rule)[1]
+r2_no_interaction <- r.squaredGLMM(model_no_interaction)[1]
+
+# Calculate f² for each effect
+f2_difficulty <- (r2_full - r2_no_difficulty) / (1 - r2_full)
+f2_flight_rule <- (r2_full - r2_no_flight_rule) / (1 - r2_full)
+f2_interaction <- (r2_full - r2_no_interaction) / (1 - r2_full)
+
+# Update results table
 results_table_subjective <- data.frame(
-  Variable = c("(Intercept)", "Difficulty (High)", "Flight Rule (IFR)", "Difficulty × Flight Rule"),
-  Estimate = fixed_effects_subjective$Estimate,
-  Std_Error = fixed_effects_subjective$`Std. Error`,
-  CI_95 = paste0("[", round(conf_int_subjective[, 1], 2), ", ", round(conf_int_subjective[, 2], 2), "]"),
-  df = fixed_effects_subjective$df,
-  t = fixed_effects_subjective$`t value`,
-  p = ifelse(fixed_effects_subjective$`Pr(>|t|)` < 0.001,
-             "< 0.001",
-             round(fixed_effects_subjective$`Pr(>|t|)`, 3))
+    Variable = c("(Intercept)", "Difficulty (High)", "Flight Rule (IFR)", "Difficulty × Flight Rule"),
+    Estimate = fixed_effects_subjective$Estimate,
+    Std_Error = fixed_effects_subjective$`Std. Error`,
+    CI_95 = paste0("[", round(conf_int_subjective[, 1], 2), ", ", round(conf_int_subjective[, 2], 2), "]"),
+    df = fixed_effects_subjective$df,
+    t = fixed_effects_subjective$`t value`,
+    f2 = c(NA, round(f2_difficulty, 3), round(f2_flight_rule, 3), round(f2_interaction, 3)),
+    p = ifelse(fixed_effects_subjective$`Pr(>|t|)` < 0.001, "< 0.001", 
+               round(fixed_effects_subjective$`Pr(>|t|)`, 3))
 )
 
 # Print results table
@@ -173,6 +189,15 @@ paragraph_subjective <- paste(
   sep = ""
 )
 
+paragraph_subjective <- paste(
+  paragraph_subjective,
+  sprintf("\nThe model explained %.1f%% of the total variance (marginal R² = %.3f, conditional R² = %.3f).",
+          r2_subjective[1, 2] * 100,  # Conditional R²
+          r2_subjective[1, 1],        # Marginal R²
+          r2_subjective[1, 2]),       # Conditional R²
+  sep = ""
+)
+
 # Print the summary paragraph
 print(paragraph_subjective)
 
@@ -200,17 +225,39 @@ fixed_effects_objective <- as.data.frame(model_summary_objective$coefficients)
 # Get confidence intervals
 conf_int_objective <- confint(mixed_model_objective, parm = "beta_", level = 0.95)
 
+# Standardized coefficients
+std_coef_objective <- standardize_parameters(mixed_model_objective, method = "refit")
+r2_objective <- r.squaredGLMM(mixed_model_objective)
+
 # Prepare results table (optional for reporting)
+# Calculate effect sizes using separate models for objective workload
+model_full_obj <- mixed_model_objective
+model_no_difficulty_obj <- lmer(oddball_percentage ~ flight_rule + (1 | Participant), data = df_simu_perf)
+model_no_flight_rule_obj <- lmer(oddball_percentage ~ difficulty + (1 | Participant), data = df_simu_perf)
+model_no_interaction_obj <- lmer(oddball_percentage ~ difficulty + flight_rule + (1 | Participant), data = df_simu_perf)
+
+# Get R² values for each objective model
+r2_full_obj <- r.squaredGLMM(model_full_obj)[1]        # Full model
+r2_no_difficulty_obj <- r.squaredGLMM(model_no_difficulty_obj)[1]
+r2_no_flight_rule_obj <- r.squaredGLMM(model_no_flight_rule_obj)[1]
+r2_no_interaction_obj <- r.squaredGLMM(model_no_interaction_obj)[1]
+
+# Calculate f² for each effect in objective model
+f2_difficulty_obj <- (r2_full_obj - r2_no_difficulty_obj) / (1 - r2_full_obj)
+f2_flight_rule_obj <- (r2_full_obj - r2_no_flight_rule_obj) / (1 - r2_full_obj)
+f2_interaction_obj <- (r2_full_obj - r2_no_interaction_obj) / (1 - r2_full_obj)
+
+# Update results table for objective workload with the same structure
 results_table_objective <- data.frame(
-  Variable = c("(Intercept)", "Difficulty (High)", "Flight Rule (IFR)", "Difficulty × Flight Rule"),
-  Estimate = fixed_effects_objective$Estimate,
-  Std_Error = fixed_effects_objective$`Std. Error`,
-  CI_95 = paste0("[", round(conf_int_objective[, 1], 2), ", ", round(conf_int_objective[, 2], 2), "]"),
-  df = fixed_effects_objective$df,
-  t = fixed_effects_objective$`t value`,
-  p = ifelse(fixed_effects_objective$`Pr(>|t|)` < 0.001,
-             "< 0.001",
-             round(fixed_effects_objective$`Pr(>|t|)`, 3))
+    Variable = c("(Intercept)", "Difficulty (High)", "Flight Rule (IFR)", "Difficulty × Flight Rule"),
+    Estimate = fixed_effects_objective$Estimate,
+    Std_Error = fixed_effects_objective$`Std. Error`,
+    CI_95 = paste0("[", round(conf_int_objective[, 1], 2), ", ", round(conf_int_objective[, 2], 2), "]"),
+    df = fixed_effects_objective$df,
+    t = fixed_effects_objective$`t value`,
+    f2 = c(NA, round(f2_difficulty_obj, 3), round(f2_flight_rule_obj, 3), round(f2_interaction_obj, 3)),
+    p = ifelse(fixed_effects_objective$`Pr(>|t|)` < 0.001, "< 0.001", 
+               round(fixed_effects_objective$`Pr(>|t|)`, 3))
 )
 
 # Print results table
@@ -307,6 +354,15 @@ paragraph_objective <- paste(
   "). A significant interaction was found (",
   format_p_value(fixed_effects_objective["difficultyHigh:flight_ruleIFR", "Pr(>|t|)"]),
   ").",
+  sep = ""
+)
+
+paragraph_objective <- paste(
+  paragraph_objective,
+  sprintf("\nThe model explained %.1f%% of the total variance (marginal R² = %.3f, conditional R² = %.3f).",
+          r2_objective[1, 2] * 100,   # Conditional R²
+          r2_objective[1, 1],         # Marginal R²
+          r2_objective[1, 2]),        # Conditional R²
   sep = ""
 )
 
