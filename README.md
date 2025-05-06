@@ -1,6 +1,7 @@
-# Date: 2025-04-09 [YYYY-MM-DD]
-# Author: Quentin Chenot
-# Article: `Assessing and visualizing pilot performance in traffic patterns: A composite score approach`
+# `Assessing and visualizing pilot performance in traffic patterns: A composite score approach`
+- **Date of publication:** 2025-04-23 [YYYY-MM-DD]
+- **Authors:** Quentin Chenot and Sébastien Scannella (Fédération ENAC ISAE-SUPAERO ONERA, Université de Toulouse, 31400 Toulouse, France)
+- **DOI:** https://doi.org/10.3390/safety11020037
 
 This repository contains R scripts for the analysis conducted in this project. The scripts are organized to correspond with the sections of the associated scientific article.
 
