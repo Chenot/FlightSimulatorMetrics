@@ -1,6 +1,6 @@
 # Assessing and visualizing pilot performance in traffic patterns: A composite score approach
 - **Journal and DOI:** Safety [[link to DOI](https://doi.org/10.3390/safety11020037)]
-- **Authors:** Quentin Chenot and Sébastien Scannella
+- **Authors:** Quentin Chenot, Florine Riedinger, Frédéric Dehais and Sébastien Scannella
 - **Date of publication:** 2025-04-23 [YYYY-MM-DD]
 
 This repository contains R scripts for the analysis conducted in this project. The scripts are organized to correspond with the sections of the associated scientific article.
@@ -60,10 +60,15 @@ This repository contains R scripts for the analysis conducted in this project. T
 
 ## **Dependencies**
 
+### Statistical Analysis Software
+- R and RStudio
+- Required packages: `dplyr`, `tidyverse`, `lmerTest`, `lme4`, `broom`, `ggplot2`, `ggpubr`, `gghalves`, `PupillometryR`, `performance`, `gridExtra`, `e1071`, `rstudioapi`, `nortest`, `xtable`, `reshape2`, `tidyr`, `kableExtra`.
+
+### Computational environment
+- OS: Windows 10
 - R version: 4.2.2
-- Required packages: dplyr, tidyverse, lmerTest, lme4, broom, ggplot2, ggpubr, gghalves, PupillometryR, performance, gridExtra, e1071, rstudioapi, nortest, xtable, reshape2, tidyr, kableExtra
+- RStudio version: 2023.06.2
 
 ## **Contact**
-
 For questions or issues, please contact Quentin Chenot [quentinchenot@gmail.com].
 
